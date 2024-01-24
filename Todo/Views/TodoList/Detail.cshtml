@@ -14,9 +14,19 @@
     <ul class="list-group">
 
         <li class="list-group-item">
-            <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
-                <strong>Add New Item</strong>
-            </a>
+            <div class="row">
+                <div class="col-md-8">
+                    <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
+                        <strong>Add New Item</strong>
+                    </a>
+                </div>
+                <div class ="col-md-4 text-right">
+                    <a asp-action="Detail" asp-controller="ToDoList" asp-route-todoListId="@Model.TodoListId"
+                       asp-route-showCompletedItems="@(Model.ShowCompletedItems ? false : true)">
+                        <strong>@(Model.ShowCompletedItems ? "Hide Completed Tasks" : "Show Completed Tasks")</strong>
+                    </a>
+                </div>
+            </div>
         </li>
 
         @foreach (var item in Model.Items)
@@ -34,23 +44,24 @@
                     contextualClass = "";
                     break;
             }
+            if (!item.IsDone || Model.ShowCompletedItems)
+            {
+                <li class="list-group-item @contextualClass">
 
-            <li class="list-group-item @contextualClass">
-                
-                <div class="row">
+                    <div class="row">
 
-                <div class="col-md-8">
-                    <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
+                        <div class="col-md-8">
+                            <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
 
-                        @if (item.IsDone)
-                        {
-                            <s>@item.Title</s>
-                        }
-                        else
-                        {
-                            <text>@item.Title</text>
-                        }
-                    </a>
+                                @if (item.IsDone)
+                                {
+                                    <s>@item.Title</s>
+                                }
+                                else
+                                {
+                                    <text>@item.Title</text>
+                                }
+                            </a>
                 </div>
 
                 <div class="col-md-4 text-right">
@@ -64,6 +75,7 @@
                 </div>
 
             </li>
+            }
         }
     </ul>
 </div>

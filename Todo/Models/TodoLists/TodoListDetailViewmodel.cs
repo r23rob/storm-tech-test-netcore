@@ -9,9 +9,12 @@ namespace Todo.Models.TodoLists
         public string Title { get; }
         public ICollection<TodoItemSummaryViewmodel> Items { get; }
 
-        public TodoListDetailViewmodel(int todoListId, string title, ICollection<TodoItemSummaryViewmodel> items)
+        public bool ShowCompletedItems { get; set; } = true;
+
+        public TodoListDetailViewmodel(int todoListId, string title, ICollection<TodoItemSummaryViewmodel> items, bool showCompletedItems)
         {
             Items = items;
+            ShowCompletedItems = showCompletedItems;
             TodoListId = todoListId;
             Title = title;
         }

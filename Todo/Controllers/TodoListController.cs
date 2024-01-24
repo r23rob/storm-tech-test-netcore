@@ -32,11 +32,13 @@ namespace Todo.Controllers
             return View(viewmodel);
         }
 
-        public IActionResult Detail(int todoListId)
+        public IActionResult Detail(int todoListId, bool showCompletedItems)
         {
             var todoList = dbContext.SingleTodoList(todoListId);
             todoList.Items = todoList.Items.OrderBy(tl => tl.Importance).ToList();
-            var viewmodel = TodoListDetailViewmodelFactory.Create(todoList);
+            var viewmodel = TodoListDetailViewmodelFactory.Create(todoList, showCompletedItems);
+
+
             return View(viewmodel);
         }
 
