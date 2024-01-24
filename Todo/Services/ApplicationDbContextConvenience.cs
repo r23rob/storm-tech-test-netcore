@@ -11,7 +11,7 @@ namespace Todo.Services
         {
             return dbContext.TodoLists.Include(tl => tl.Owner)
                 .Include(tl => tl.Items)
-                .Where(tl => tl.Owner.Id == userId);
+                .Where(tl => tl.Items.Any(it=> it.ResponsiblePartyId == userId));
         }
 
         public static TodoList SingleTodoList(this ApplicationDbContext dbContext, int todoListId)
